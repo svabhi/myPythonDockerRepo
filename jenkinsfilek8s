@@ -49,7 +49,7 @@ pipeline {
         steps {
             script {
                 kubernetesDeploy(
-                    configs: 'k8s-deployment.yaml',
+                    configs: 'azure-aks.yaml',
                     kubeconfigId: 'K8S',
                     enableConfigSubstitution: true
                     )           
