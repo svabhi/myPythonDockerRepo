@@ -22,7 +22,7 @@ pipeline {
             steps {
                 
                 script {
-                    dockerImage = docker.build registryName
+                    dockerImage = docker.build registryName + ":$BUILD_NUMBER"
                 }
             }
         }
@@ -38,20 +38,29 @@ pipeline {
       }
     }
 
-       // Stopping Docker containers for cleaner Docker run
-     stage('stop previous containers') {
-         steps {
-            sh 'docker ps -f name=mypythonContainer -q | xargs --no-run-if-empty docker container stop'
-            sh 'docker container ls -a -fname=mypythonContainer -q | xargs -r docker container rm'
-         }
-       }
-      
-    stage('Docker Run') {
-     steps{
-         script {
-                sh 'docker run -d -p 8096:5000 --rm --name mypythonContainer ${registryUrl}/${registryName}'
-            }
+       // Remove Unused docker image
+      stage('Remove Unused docker image') {
+      steps{
+        sh "docker rmi $registry:$BUILD_NUMBER"
       }
+    }
+      
+    stage ('K8S Deploy') {
+        steps {
+            script {
+                kubernetesDeploy(
+                    configs: 'k8s-deployment.yaml',
+                    kubeconfigId: 'K8S',
+                    enableConfigSubstitution: true
+                    )           
+               
+            }
+        }
     }
     }
  }
+ always {
+  // remove built docker image and prune system
+  print 'Cleaning up the Docker system.'
+  sh 'docker system prune -f'
+}
