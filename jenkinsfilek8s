@@ -22,7 +22,7 @@ pipeline {
             steps {
                 
                 script {
-                    dockerImage = docker.build registryName + ":$BUILD_NUMBER" + "ABHI"
+                    dockerImage = docker.build registryName + ":$BUILD_NUMBER"
                 }
             }
         }
@@ -51,12 +51,7 @@ pipeline {
                 kubernetesDeploy(
                     configs: 'k8s-deployment.yaml',
                     kubeconfigId: 'K8S',
-                    enableConfigSubstitution: true
- sh """
-                kubectl config view
-                kubectl create -f /home/my-user/file-svc.yml
-            """
-
+                    enableConfigSubstitution: false
                     )           
                
             }
