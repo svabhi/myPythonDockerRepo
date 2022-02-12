@@ -1,34 +1,12 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: my-python-deployment
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: python-app
-  template:
-    metadata:
-      labels:
-        app: python-app
-    spec:
-      containers:
-      - name: my-python-app
-        image: akdevopscoaching/mypython-app
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 5000
-# service type loadbalancer       
----
 apiVersion: v1
-kind: Service
+kind: Pod
 metadata:
-  name: python-app-svc
+  name: my-first-pod
 spec:
-  selector:
-    app: python-app
-  ports:
-    - protocol: TCP
-      port: 5000
-      targetPort: 5000
-  type: LoadBalancer
+  containers:
+    - name: nginx-container
+      image: nginx:1.21.1
+      ports:
+        - containerPort: 80
+          protocol: TCP
+          name: http

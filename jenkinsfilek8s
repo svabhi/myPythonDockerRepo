@@ -22,7 +22,7 @@ pipeline {
             steps {
                 
                 script {
-                    dockerImage = docker.build registryName + ":$BUILD_NUMBER"
+                    dockerImage = docker.build registryName + ":$BUILD_NUMBER" + "ABHI"
                 }
             }
         }
@@ -49,9 +49,14 @@ pipeline {
         steps {
             script {
                 kubernetesDeploy(
-                    configs: 'azure-aks.yaml',
+                    configs: 'k8s-deployment.yaml',
                     kubeconfigId: 'K8S',
                     enableConfigSubstitution: true
+ sh """
+                kubectl config view
+                kubectl create -f /home/my-user/file-svc.yml
+            """
+
                     )           
                
             }
@@ -59,8 +64,4 @@ pipeline {
     }
     }
  }
- always {
-  // remove built docker image and prune system
-  print 'Cleaning up the Docker system.'
-  sh 'docker system prune -f'
-}
+ 
