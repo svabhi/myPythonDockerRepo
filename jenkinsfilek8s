@@ -49,11 +49,9 @@ pipeline {
         steps {
             script {
                 kubernetesDeploy(
-                    sh """
-                kubectl config view
-                kubectl create -f ./test.yaml
-                kubectl create -f ./azure-aks.yaml
-                   """
+                    configs: 'azure-aks.yaml',
+                    kubeconfigId: 'K8S',
+                    enableConfigSubstitution: false
                     )           
                
             }
