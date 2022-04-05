@@ -38,18 +38,19 @@ pipeline {
       }
     }
 
-       // Remove Unused docker image
+       //Remove Unused docker image
     //   stage('Remove Unused docker image') {
     //   steps{
     //     sh "docker rmi $registry:$BUILD_NUMBER"
     //   }
     // }
       
-    stage('Deploy') {
-        withCredentials([azureServicePrincipal('principal-credentials-id')]) {
-            sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
-            sh 'az account set -s $AZURE_SUBSCRIPTION_ID'
-            sh 'az resource list'
-        }
-    }
+    // stage('Deploy') {
+    //     withCredentials([azureServicePrincipal('principal-credentials-id')]) {
+    //         sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
+    //         sh 'az account set -s $AZURE_SUBSCRIPTION_ID'
+    //         sh 'az resource list'
+
+    //     }
+    // }
 } 
