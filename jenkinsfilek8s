@@ -1,13 +1,13 @@
 pipeline {
-     agent { label 'jdk11-mvn3.8.4' }
+   agent { label 'slave' }
      
         environment {
         //once you create ACR in Azure cloud, use that here
-        registryName = "mycontainerregistryabhi"
+        registryName = "myacr2003"
         //- update your credentials ID after creating credentials for connecting to ACR
         registryCredential = 'ACR'
         dockerImage = ''
-        registryUrl = 'mycontainerregistryabhi.azurecr.io'
+        registryUrl = 'myacr2003.azurecr.io'
     }
     
     stages {
