@@ -45,12 +45,12 @@ pipeline {
     //   }
     // }
       
-    // stage('Deploy') {
-    //     withCredentials([azureServicePrincipal('principal-credentials-id')]) {
-    //         sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
-    //         sh 'az account set -s $AZURE_SUBSCRIPTION_ID'
-    //         sh 'az resource list'
+    stage('Deploy') {
+        withCredentials([azureServicePrincipal('principal-credentials-id')]) {
+            sh 'az login --service-principal --username "7cd471e0-b277-483a-af54-a70ae0d2dea3" --password "aKR7Q~mK.yvWkQi~666xbpAIPgC6AsGTJRhd-" --tenant "5d5a1d5b-ee8f-4ed1-abd8-97ae2866612d"'
+            sh 'az account set -s "e255ef0d-f9a7-4ca1-9dac-8b9ed925d94f"'
+            sh 'az resource list'
 
-    //     }
-    // }
-} 
+        }
+    }
+} }
