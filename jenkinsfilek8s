@@ -1,3 +1,8 @@
+def call(body) {
+
+ACR_CREDENTIALS = 'ACR'
+RESISTRY_URL = 'myacr2003.azurecr.io'
+
 pipeline {
    agent { label 'slave' }
      
@@ -5,9 +10,9 @@ pipeline {
         //once you create ACR in Azure cloud, use that here
         registryName = "myacr2003"
         //- update your credentials ID after creating credentials for connecting to ACR
-        registryCredential = 'ACR'
+        registryCredential = $ACR_CREDENTIALS
         dockerImage = ''
-        registryUrl = 'myacr2003.azurecr.io'
+        registryUrl = $RESISTRY_URL
     }
     
     stages {
@@ -57,3 +62,5 @@ pipeline {
         }
     }
 } }
+
+}
